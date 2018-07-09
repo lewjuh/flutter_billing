@@ -185,7 +185,7 @@ public final class BillingPlugin implements MethodCallHandler {
 
         for (Purchase purchase : purchases) {
             identifiers.add(purchase.getSku());
-            Log.d("cake", purchase.getPurchaseToken());
+            Log.d("cake", purchase.toString());
         }
 
         return identifiers;
