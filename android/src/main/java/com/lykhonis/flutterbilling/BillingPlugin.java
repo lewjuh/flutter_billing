@@ -141,6 +141,7 @@ public final class BillingPlugin implements MethodCallHandler {
                                          .setType(SkuType.INAPP)
                                          .build());
 
+                Log.d(TAG, BillingResponse);
                 if (responseCode == BillingResponse.OK) {
                     pendingPurchaseRequests.put(identifier, result);
                 } else {
