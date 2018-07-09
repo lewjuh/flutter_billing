@@ -90,8 +90,8 @@ public final class BillingPlugin implements MethodCallHandler {
     }
 
     private void fetchProducts(final List<String> identifiers, final Result result) {
+        Log.d("cake", "CAKE CAKE CAKE");
         executeServiceRequest(new Request() {
-            Log.d(TAG, "CAKE CAKE CAKE");
             @Override
             public void execute() {
                 billingClient.querySkuDetailsAsync(
