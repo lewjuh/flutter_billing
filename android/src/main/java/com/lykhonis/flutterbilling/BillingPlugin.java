@@ -145,7 +145,6 @@ public final class BillingPlugin implements MethodCallHandler {
                 // Log.d("cake", responseCode);
                 if (responseCode == BillingResponse.OK) {
                     pendingPurchaseRequests.put(identifier, result);
-                    Log.d("cake", result.purchaseToken);
                 } else {
                     result.error("ERROR", "Failed to launch billing flow to purchase an item with error " + responseCode, null);
                 }
@@ -238,6 +237,10 @@ public final class BillingPlugin implements MethodCallHandler {
         public void onPurchasesUpdated(int resultCode, List<Purchase> purchases) {
             if (resultCode == BillingResponse.OK && purchases != null) {
                 final List<String> identifiers = getIdentifiers(purchases);
+
+                for (purchases : purchase) {
+                    Log.d("cake", purchase.getPurchaseToken());
+                }
 
                 for (String identifier : identifiers) {
                     final Result result = pendingPurchaseRequests.remove(identifier);
