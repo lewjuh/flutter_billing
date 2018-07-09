@@ -142,7 +142,7 @@ public final class BillingPlugin implements MethodCallHandler {
                                          .setType(SkuType.INAPP)
                                          .build());
 
-                Log.d(TAG, responseCode);
+                Log.d("cake", responseCode.toString());
                 if (responseCode == BillingResponse.OK) {
                     pendingPurchaseRequests.put(identifier, result);
                 } else {
@@ -237,6 +237,10 @@ public final class BillingPlugin implements MethodCallHandler {
         public void onPurchasesUpdated(int resultCode, List<Purchase> purchases) {
             if (resultCode == BillingResponse.OK && purchases != null) {
                 final List<String> identifiers = getIdentifiers(purchases);
+
+                for (Purchase purchase : purchases) {
+                    Log.d("cake", purchase)
+                }
 
                 for (String identifier : identifiers) {
                     final Result result = pendingPurchaseRequests.remove(identifier);
