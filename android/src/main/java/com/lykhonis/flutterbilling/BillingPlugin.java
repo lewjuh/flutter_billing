@@ -166,6 +166,11 @@ public final class BillingPlugin implements MethodCallHandler {
 
                 if (responseCode == BillingResponse.OK) {
                     result.success(getIdentifiers(purchasesResult.getPurchasesList()));
+
+                    for (Purchase purchase : purchasesResult.getPurchasesList()) {
+                        Log.d("cake", purchase.getPurchaseToken());
+                        Log.d("cake2", "wut");
+                    }
                 } else {
                     result.error("ERROR", "Failed to query purchases with error " + responseCode, null);
                 }
