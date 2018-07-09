@@ -239,7 +239,7 @@ public final class BillingPlugin implements MethodCallHandler {
                 final List<String> identifiers = getIdentifiers(purchases);
 
                 for (Purchase purchase : purchases) {
-                    Log.d("cake", purchase)
+                    Log.d("cake", purchase);
                 }
 
                 for (String identifier : identifiers) {
