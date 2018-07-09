@@ -185,6 +185,7 @@ public final class BillingPlugin implements MethodCallHandler {
 
         for (Purchase purchase : purchases) {
             identifiers.add(purchase.getSku());
+            Log.d("cake", purchase.getPurchaseToken());
         }
 
         return identifiers;
@@ -237,10 +238,6 @@ public final class BillingPlugin implements MethodCallHandler {
         public void onPurchasesUpdated(int resultCode, List<Purchase> purchases) {
             if (resultCode == BillingResponse.OK && purchases != null) {
                 final List<String> identifiers = getIdentifiers(purchases);
-
-                for (purchases : purchase) {
-                    Log.d("cake", purchase.getPurchaseToken());
-                }
 
                 for (String identifier : identifiers) {
                     final Result result = pendingPurchaseRequests.remove(identifier);
