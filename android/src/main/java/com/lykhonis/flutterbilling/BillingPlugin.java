@@ -170,10 +170,14 @@ public final class BillingPlugin implements MethodCallHandler {
                     result.success(getIdentifiers(purchasesResult.getPurchasesList()));
 
                     for (Purchase purchase : purchasesResult.getPurchasesList()) {
-                        Log.d("cake", purchase.getPurchaseToken());
-                        JSONObject jObject = new JSONObject(purchase.getPurchaseToken());
-                        String pToken = jObject.getString("purchaseToken");
-                        Log.d("cake2", pToken);
+                        try {
+                            Log.d("cake", purchase.getPurchaseToken());
+                            JSONObject jObject = new JSONObject(purchase.getPurchaseToken());
+                            String pToken = jObject.getString("purchaseToken");
+                            Log.d("cake2", pToken);
+                        } catch (JSONException e) {
+                            //some exception handler code.
+                        }
                     }
                 } else {
                     result.error("ERROR", "Failed to query purchases with error " + responseCode, null);
