@@ -183,12 +183,13 @@ public final class BillingPlugin implements MethodCallHandler {
         });
     }
 
-    private List<Map> getIdentifiers(List<Purchase> purchases) {
+    private List<String> getIdentifiers(List<Purchase> purchases) {
         if (purchases == null) return Collections.emptyList();
 
         final List<Map> identifiers = new ArrayList<>(purchases.size());
 
         for (Purchase purchase : purchases) {
+            identifiers.add(purchase.getSku());
             try {
                 Log.d("cake", purchase.getPurchaseToken());
                 JSONObject jObject = new JSONObject(purchase.getPurchaseToken());
@@ -197,7 +198,8 @@ public final class BillingPlugin implements MethodCallHandler {
                 final Map<String, Object> newPurch = new HashMap<>();
                 newPurch.put("sku", purchase.getSku());
                 newPurch.put("token", pToken);
-                identifiers.add(newPurch);
+                Log.d("cake3", newPurch.toString());
+                // identifiers.add(newPurch);
             } catch (JSONException e) {
                 //some exception handler code.
             }
@@ -252,10 +254,10 @@ public final class BillingPlugin implements MethodCallHandler {
         @Override
         public void onPurchasesUpdated(int resultCode, List<Purchase> purchases) {
             if (resultCode == BillingResponse.OK && purchases != null) {
-                final List<Map> identifiers = getIdentifiers(purchases);
+                final List<String> identifiers = getIdentifiers(purchases);
 
-                for (Map identifier : identifiers) {
-                    final Result result = pendingPurchaseRequests.remove(identifier.get("sku"));
+                for (String identifier : identifiers) {
+                    final Result result = pendingPurchaseRequests.remove(identifier);
                     if (result != null) result.success(identifiers);
                 }
             } else {
