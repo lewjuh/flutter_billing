@@ -183,7 +183,7 @@ public final class BillingPlugin implements MethodCallHandler {
         });
     }
 
-    private List<String> getIdentifiers(List<Purchase> purchases) {
+    private List<Map> getIdentifiers(List<Purchase> purchases) {
         if (purchases == null) return Collections.emptyList();
 
         final List<Map> identifiers = new ArrayList<>(purchases.size());
