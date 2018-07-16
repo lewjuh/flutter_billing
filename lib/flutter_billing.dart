@@ -159,6 +159,8 @@ class Billing {
   Future<bool> purchase(String identifier) {
     assert(identifier != null);
     if (_purchasedProducts.contains(identifier)) {
+      print('ayyyy');
+      print(_purchasedProducts);
       return new Future.value(true);
     }
     return synchronized(this, () async {
