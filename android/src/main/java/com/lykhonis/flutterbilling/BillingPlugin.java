@@ -254,7 +254,7 @@ public final class BillingPlugin implements MethodCallHandler {
         @Override
         public void onPurchasesUpdated(int resultCode, List<Purchase> purchases) {
             if (resultCode == BillingResponse.OK && purchases != null) {
-                final List<String> identifiers = getIdentifiers(purchases);
+                final List<Map> identifiers = getIdentifiers(purchases);
 
                 for (String identifier : identifiers) {
                     final Result result = pendingPurchaseRequests.remove(identifier.get("sku"));
