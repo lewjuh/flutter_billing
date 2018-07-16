@@ -30,10 +30,6 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-import io.flutter.plugin.common.BasicMessageChannel;
-import io.flutter.plugin.common.BasicMessageChannel.MessageHandler;
-import io.flutter.plugin.common.BasicMessageChannel.Reply;
-import io.flutter.plugin.common.StringCodec;
 
 public final class BillingPlugin implements MethodCallHandler {
     private final String TAG = BillingPlugin.class.getSimpleName();
@@ -42,10 +38,6 @@ public final class BillingPlugin implements MethodCallHandler {
     private final BillingClient billingClient;
     private final Map<String, Result> pendingPurchaseRequests;
     private boolean billingServiceConnected;
-
-    private static final String CHANNEL = "vpn-status";
-    private static final String EMPTY_MESSAGE = "";
-    private BasicMessageChannel<String> messageChannel;
 
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_billing");
@@ -85,19 +77,10 @@ public final class BillingPlugin implements MethodCallHandler {
                 Log.d(TAG, "Failed to setup billing service!");
             }
         });
-
-        messageChannel = new BasicMessageChannel<>(CHANNEL, StringCodec.INSTANCE);
-        messageChannel.
-                setMessageHandler(new MessageHandler<String>() {
-                    @Override
-                    public void onMessage(String s, Reply<String> reply) {
-                        reply.reply(EMPTY_MESSAGE);
-                    }
-                });
     }
 
     @Override
-    public void onMethodCall(MethodCall methodCall, Result result) {
+    public void onMethodCall(MethodCall methodCall, javax.xml.transform.Result result) {
         if ("fetchPurchases".equals(methodCall.method)) {
             fetchPurchases(result);
         } else if ("purchase".equals(methodCall.method)) {
@@ -107,6 +90,7 @@ public final class BillingPlugin implements MethodCallHandler {
         } else {
             result.notImplemented();
         }
+        Log.d("cake", result.toString());
     }
 
     private void fetchProducts(final List<String> identifiers, final Result result) {
@@ -193,7 +177,6 @@ public final class BillingPlugin implements MethodCallHandler {
                             JSONObject jObject = new JSONObject(purchase.getPurchaseToken());
                             String pToken = jObject.getString("purchaseToken");
                             Log.d("cake2", pToken);
-                            messageChannel.send(pToken);
                         } catch (JSONException e) {
                             //some exception handler code.
                         }

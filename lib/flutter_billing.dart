@@ -164,6 +164,7 @@ class Billing {
     return synchronized(this, () async {
       try {
         final List purchases = await _channel.invokeMethod('purchase', {'identifier': identifier});
+        print(purchases);
         _purchasedProducts.addAll(purchases.cast());
         return purchases.contains(identifier);
       } catch (e) {
