@@ -80,7 +80,7 @@ public final class BillingPlugin implements MethodCallHandler {
     }
 
     @Override
-    public void onMethodCall(MethodCall methodCall, javax.xml.transform.Result result) {
+    public void onMethodCall(MethodCall methodCall, Result result) {
         if ("fetchPurchases".equals(methodCall.method)) {
             fetchPurchases(result);
         } else if ("purchase".equals(methodCall.method)) {
@@ -90,7 +90,6 @@ public final class BillingPlugin implements MethodCallHandler {
         } else {
             result.notImplemented();
         }
-        Log.d("cake", result.toString());
     }
 
     private void fetchProducts(final List<String> identifiers, final Result result) {
