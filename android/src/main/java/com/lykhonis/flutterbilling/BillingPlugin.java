@@ -86,7 +86,7 @@ public final class BillingPlugin implements MethodCallHandler {
             }
         });
 
-        messageChannel = new BasicMessageChannel<>(getFlutterView(), CHANNEL, StringCodec.INSTANCE);
+        messageChannel = new BasicMessageChannel<>(CHANNEL, StringCodec.INSTANCE);
         messageChannel.
                 setMessageHandler(new MessageHandler<String>() {
                     @Override
