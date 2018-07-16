@@ -186,7 +186,7 @@ public final class BillingPlugin implements MethodCallHandler {
     private List<String> getIdentifiers(List<Purchase> purchases) {
         if (purchases == null) return Collections.emptyList();
 
-        final List<Map> identifiers = new ArrayList<>(purchases.size());
+        final List<String> identifiers = new ArrayList<>(purchases.size());
 
         for (Purchase purchase : purchases) {
             identifiers.add(purchase.getSku());
