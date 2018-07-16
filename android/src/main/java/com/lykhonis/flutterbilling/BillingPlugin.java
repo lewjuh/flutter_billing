@@ -87,6 +87,8 @@ public final class BillingPlugin implements MethodCallHandler {
             purchase(methodCall.<String>argument("identifier"), result);
         } else if ("fetchProducts".equals(methodCall.method)) {
             fetchProducts(methodCall.<List<String>>argument("identifiers"), result);
+        } else if ("getToken".equals(methodCall.method)) {
+            fetchProducts(methodCall.<List<String>>argument("identifiers"), result);
         } else {
             result.notImplemented();
         }
@@ -169,17 +171,6 @@ public final class BillingPlugin implements MethodCallHandler {
 
                 if (responseCode == BillingResponse.OK) {
                     result.success(getIdentifiers(purchasesResult.getPurchasesList()));
-
-                    for (Purchase purchase : purchasesResult.getPurchasesList()) {
-                        try {
-                            Log.d("cake", purchase.getPurchaseToken());
-                            JSONObject jObject = new JSONObject(purchase.getPurchaseToken());
-                            String pToken = jObject.getString("purchaseToken");
-                            Log.d("cake2", pToken);
-                        } catch (JSONException e) {
-                            //some exception handler code.
-                        }
-                    }
                 } else {
                     result.error("ERROR", "Failed to query purchases with error " + responseCode, null);
                 }
@@ -195,12 +186,21 @@ public final class BillingPlugin implements MethodCallHandler {
     private List<String> getIdentifiers(List<Purchase> purchases) {
         if (purchases == null) return Collections.emptyList();
 
-        final List<String> identifiers = new ArrayList<>(purchases.size());
+        final List<Map> identifiers = new ArrayList<>(purchases.size());
 
         for (Purchase purchase : purchases) {
-            identifiers.add(purchase.getSku());
-            Log.d("cake", purchase.toString());
-            Log.d("cake2", "wut");
+            try {
+                Log.d("cake", purchase.getPurchaseToken());
+                JSONObject jObject = new JSONObject(purchase.getPurchaseToken());
+                String pToken = jObject.getString("purchaseToken");
+                Log.d("cake2", pToken);
+                identifiers.add({
+                    sku: purchase.getSku(),
+                    token: pToken
+                });
+            } catch (JSONException e) {
+                //some exception handler code.
+            }
         }
 
         return identifiers;
