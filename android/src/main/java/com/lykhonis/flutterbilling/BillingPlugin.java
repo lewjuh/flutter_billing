@@ -194,10 +194,9 @@ public final class BillingPlugin implements MethodCallHandler {
                 JSONObject jObject = new JSONObject(purchase.getPurchaseToken());
                 String pToken = jObject.getString("purchaseToken");
                 Log.d("cake2", pToken);
-                Map newPurch = {
-                    sku: purchase.getSku(),
-                    token: pToken
-                };
+                final Map<String, Object> newPurch = new HashMap<>();
+                newPurch.put("sku", purchase.getSku());
+                newPurch.put("token", pToken);
                 identifiers.add(newPurch);
             } catch (JSONException e) {
                 //some exception handler code.
