@@ -256,7 +256,7 @@ public final class BillingPlugin implements MethodCallHandler {
             if (resultCode == BillingResponse.OK && purchases != null) {
                 final List<Map> identifiers = getIdentifiers(purchases);
 
-                for (String identifier : identifiers) {
+                for (Map identifier : identifiers) {
                     final Result result = pendingPurchaseRequests.remove(identifier.get("sku"));
                     if (result != null) result.success(identifiers);
                 }
